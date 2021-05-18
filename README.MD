@@ -34,4 +34,4 @@
 
 4. 能主动尝试解决一般报错
 
-5. 阅读[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)后向本项目提交错误输出
+5. 阅读[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)后向本项目提交issues
