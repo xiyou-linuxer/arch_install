@@ -11,7 +11,7 @@ echo -e " [archlinuxcn] \n Include = /etc/pacman.d/archlinuxcn-mirrorlist " >>/e
 echo -e "Server = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch \nServer = https://mirrors.hit.edu.cn/archlinuxcn/\$arch" >/etc/pacman.d/archlinuxcn-mirrorlist
 echo -e "\n" | pacman -Syy archlinuxcn-keyring >/dev/null
 #
-# ? echo -e "\n" |pacman -S archlinuxcn-mirrorlist-git  >/dev/null
+echo -e "\n" |pacman -S archlinuxcn-mirrorlist-git  >/dev/null
 echo "换源成功"
 
 
@@ -23,17 +23,10 @@ echo $userhostname >>/etc/hostname
 echo "主机名更改完成"
 
 
-# 此选项应默认安装
-# read -n1 -p "是否安装多系统引导?[y/n]" REPLY
-# if [[ $REPLY =~ ^[Yy]$ ]]; then
-#     echo -e "\n" | pacman -S os-prober >/dev/null
-#     echo "os-prober 安装完成"
-# fi
-
-read -n1 -p "是否与windows共存 ?[y/n]" REPLY
+read -n1 -p "是否安装多系统引导?[y/n]" REPLY
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo -e "\n" | pacman -S ntfs-3g >/dev/null
-    echo "ntfs-3g 安装完成"
+    echo -e "\n" | pacman -S os-prober ntfs-3g >/dev/null
+    echo "os-prober 安装完成"
 fi
 
 echo "生成grub 引导安装"
@@ -69,7 +62,7 @@ echo "输入法安装完成"
 
 echo "蓝牙正在安装"
 echo -e "\n" | pacman -S bluez bluez-utils pulseaudio-bluetooth >/dev/null
-modprobe btusb  
+modprobe btusb
 systemctl enable bluetooth.service
 echo "蓝牙安装完成"
 
@@ -86,12 +79,26 @@ echo -e "\n" | pacman -S zsh oh-my-zsh-git zsh-syntax-highlighting zsh-autosugge
 chsh -s /bin/zsh $username
 ln -s /usr/share/zsh/plugins/zsh-syntax-highlighting /usr/share/oh-my-zsh/custom/plugins/
 ln -s /usr/share/zsh/plugins/zsh-autosuggestions /usr/share/oh-my-zsh/custom/plugins/
+cp /usr/share/oh-my-zsh/zshrc /home/$username/.zshrc
+sed 's/plugins=(git)/plugins=(autojump git zsh-syntax-highlighting zsh-autosuggestions)' /home/$username/.zshrc
 
-#这句怎么加
-#plugins=(  autojump git zsh-syntax-highlighting zsh-autosuggestions)
 echo "zsh配置完成"
 
 #### TODO:桌面
+# KDE
+yes | pacman -S sddm plasma
+kde可选 pacman -S kde-applications
+pacman -S kcm-fcitx
+systemctl enable sddm
+
+
+# Gnome
+yes | pacman -S gnome
+systemctl enable gdm
+
+# DDE
+yes | pacman -S deepin lightdm
+systemctl enable lightdm
 
 
 ## 未完成

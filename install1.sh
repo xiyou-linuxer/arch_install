@@ -27,6 +27,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   echo -e "\n" | pacstrap /mnt linux linux-headers >/dev/null
   echo "linux linux-headers 安装完成"
 fi
+# linux linunx-headers
+#linux-zen linux-zen-headers
+#linux-lts linux-lts-headers
 #### TODO:其他选项
 
 mv /mnt/etc/fstab /mnt/etc/fstab.bak
