@@ -1,3 +1,4 @@
+#!/bin/bash
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 hwclock --systohc --utc
 if [ $? -eq 0 ]; then
