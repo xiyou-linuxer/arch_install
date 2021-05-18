@@ -22,6 +22,8 @@ read -p "输入主机名:" userhostname
 echo $userhostname >>/etc/hostname
 echo "主机名更改完成"
 
+
+# 此选项应默认安装
 # read -n1 -p "是否安装多系统引导?[y/n]" REPLY
 # if [[ $REPLY =~ ^[Yy]$ ]]; then
 #     echo -e "\n" | pacman -S os-prober >/dev/null
@@ -84,7 +86,12 @@ echo -e "\n" | pacman -S zsh oh-my-zsh-git zsh-syntax-highlighting zsh-autosugge
 chsh -s /bin/zsh $username
 ln -s /usr/share/zsh/plugins/zsh-syntax-highlighting /usr/share/oh-my-zsh/custom/plugins/
 ln -s /usr/share/zsh/plugins/zsh-autosuggestions /usr/share/oh-my-zsh/custom/plugins/
+
+#这句怎么加
 #plugins=(  autojump git zsh-syntax-highlighting zsh-autosuggestions)
 echo "zsh配置完成"
 
 #### TODO:桌面
+
+
+## 未完成
