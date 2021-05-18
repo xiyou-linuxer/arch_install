@@ -6,35 +6,37 @@ echo " 换源成功  "
 timedatectl set-ntp true
 echo " 时间校准完成"
 
-echo -e "\n" | pacman -Syy >/dev/null
+echo -e "\n" | pacman -Syy
 echo " pacman更新完成"
 
 read -p "if had Partition ? make sure you have /mnt && /mnt/boot [y/n]" -n 1
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  echo -e "\n" | pacstrap /mnt linux linux-headers >/dev/null
-  echo "linux linux-headers 安装完成"
+  echo -e "\n" | pacstrap /mnt base base-devel linux-firmware
+  echo "安装基础组件完成"
 else
   echo "exit sh1 "
   exit 0
 fi
 
-echo -e "\n" | pacstrap /mnt base base-devel linux-firmware >/dev/null
-echo "安装基础组件"
-
-read -n1 -p "if install linux linux-headers in /mnt ?[y/n]" REPLY
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-  echo -e "\n" | pacstrap /mnt linux linux-headers >/dev/null
+echo "[1]install linux linux-headers    -------[default]"
+echo "[2]if install linux-zen linux-zen-headers? "
+echo "[3]if install linux-lts linux-lts-headers?"
+read -n1 -p "which would you want to install ?[1/2/3]" REPLY
+if [[ $REPLY =~ ^[1]$ ]]; then
+  echo -e "\n" | pacstrap /mnt linux linux-headers
   echo "linux linux-headers 安装完成"
+elif [[ $REPLY =~ ^[2]$ ]]; then
+  echo -e "\n" | pacstrap /mnt linux-zen linux-zen-headers
+  echo "linux-zen linux-zen-headers 安装完成"
+elif [[ $REPLY =~ ^[3]$ ]]; then
+  echo -e "\n" | pacstrap /mnt linux-lts linux-lts-headers
+  echo "linux-lts linux-lts-headers 安装完成"
 fi
-# linux linunx-headers
-#linux-zen linux-zen-headers
-#linux-lts linux-lts-headers
-#### TODO:其他选项
 
 mv /mnt/etc/fstab /mnt/etc/fstab.bak
 genfstab -U /mnt >/mnt/etc/fstab
-echo "生成fstab"
+echo "生成fstab完成"
 
 cp ./install2.sh /mnt
 echo "脚本1结束,请执行脚本2"
