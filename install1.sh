@@ -12,27 +12,29 @@ echo " pacman更新完成"
 read -p "if had Partition ? make sure you have /mnt && /mnt/boot [y/n]" -n 1
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  pacstrap /mnt linux linux-headers >/dev/null
+  echo -e "\n" | pacstrap /mnt linux linux-headers >/dev/null
   echo "linux linux-headers 安装完成"
 else
-  echo "exit sh "
-  exit
+  echo "exit sh1 "
+  exit 0
 fi
 
-pacstrap /mnt base base-devel linux-firmware >/dev/null
+echo -e "\n" | pacstrap /mnt base base-devel linux-firmware >/dev/null
 echo "安装基础组件"
 
 read -n1 -p "if install linux linux-headers in /mnt ?[y/n]" REPLY
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  pacstrap /mnt linux linux-headers >/dev/null
-  printf "linux linux-headers 安装完成\n"
+  echo -e "\n" | pacstrap /mnt linux linux-headers >/dev/null
+  echo "linux linux-headers 安装完成"
 fi
 #### TODO:其他选项
 
 mv /mnt/etc/fstab /mnt/etc/fstab.bak
-genfstab -U /mnt >/mnt/etc/fstab 
+genfstab -U /mnt >/mnt/etc/fstab
 echo "生成fstab"
-cp ./install2.sh  /mnt
+
+cp ./install2.sh /mnt
 echo "脚本1结束,请执行脚本2"
 
 arch-chroot /mnt
+exit 0
