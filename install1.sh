@@ -15,7 +15,7 @@ else
   exit -1
 fi
 
-echo -e "\n" | pacman -Syy
+ pacman -Syy --noconfirm
 if [ $? -eq 0 ]; then
   echo " pacman更新完成"
 else

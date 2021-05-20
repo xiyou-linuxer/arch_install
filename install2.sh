@@ -23,8 +23,8 @@ echo -e "Server = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch \nServer = http
 rm /etc/pacman.d/gnupg -rf
 pacman-key --init
 pacman-key --populate
-echo -e "\n" | pacman -Syy archlinuxcn-keyring
-echo -e "\n" | pacman -S archlinuxcn-mirrorlist-git
+ pacman -Syy archlinuxcn-keyring  --noconfirm
+ pacman -S archlinuxcn-mirrorlist-git  --noconfirm 
 if [ $? -eq 0 ]; then
     echo "换源完成"
 else
@@ -32,7 +32,7 @@ else
     exit -1
 fi
 
-echo -e "\n" | pacman -S grub efibootmgr dosfstools
+ pacman -S grub efibootmgr dosfstools  --noconfirm
 if [ $? -eq 0 ]; then
     echo "引导程序安装完成"
 else
@@ -42,7 +42,7 @@ fi
 
 read -n1 -p "是否安装多系统引导?[y/n]" REPLY
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo -e "\n" | pacman -S os-prober ntfs-3g
+  pacman -S os-prober ntfs-3g  --noconfirm
     if [ $? -eq 0 ]; then
         echo "os-prober 安装完成"
     else
@@ -88,7 +88,7 @@ else
 fi
 
 echo "字体正在安装  (Google Noto Fonts 字体,思源黑体, 思源宋体,更纱黑体)"
-echo -e "\n" | pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-sarasa-gothic adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts
+ pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-sarasa-gothic adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts  --noconfirm
 if [ $? -eq 0 ]; then
     echo "字体安装完成"
 else
@@ -97,7 +97,7 @@ else
 fi
 
 echo "网络管理器正在安装"
-echo -e "\n" | pacman -S networkmanager
+ pacman -S networkmanager  --noconfirm
 systemctl enable NetworkManager
 if [ $? -eq 0 ]; then
     echo "网络管理器安装完成"
@@ -107,7 +107,7 @@ else
 fi
 
 echo "输入法正在安装"
-echo -e "\n" | pacman -S fcitx fcitx-im fcitx-libpinyin
+ pacman -S fcitx fcitx-im fcitx-libpinyin --noconfirm
 echo -e "GTK_IM_MODULE DEFAULT=fcitx\nQT_IM_MODULE  DEFAULT=fcitx\nXMODIFIERS    DEFAULT=@im=fcitx " >/home/$username/.pam_environment
 if [ $? -eq 0 ]; then
     echo "输入法安装完成"
@@ -117,7 +117,7 @@ else
 fi
 
 echo "蓝牙正在安装"
-echo -e "\n" | pacman -S bluez bluez-utils pulseaudio-bluetooth
+ pacman -S bluez bluez-utils pulseaudio-bluetooth  --noconfirm
 modprobe btusb
 systemctl enable bluetooth.service
 if [ $? -eq 0 ]; then
@@ -140,7 +140,7 @@ else
 fi
 
 echo "zsh正在配置"
-echo -e "\n" | pacman -S zsh oh-my-zsh-git zsh-syntax-highlighting zsh-autosuggestions autojump
+ pacman -S zsh oh-my-zsh-git zsh-syntax-highlighting zsh-autosuggestions autojump  --noconfirm
 chsh -s /bin/zsh $username
 ln -s /usr/share/zsh/plugins/zsh-syntax-highlighting /usr/share/oh-my-zsh/custom/plugins/
 ln -s /usr/share/zsh/plugins/zsh-autosuggestions /usr/share/oh-my-zsh/custom/plugins/
@@ -158,7 +158,7 @@ echo "[2]if install gnome ? "
 echo "[3]if install deepin lightdm?"
 read -n1 -p "which would you want to install ?[1/2/3]" REPLY
 if [[ $REPLY =~ ^[1]$ ]]; then
-    echo -e "\n" | pacman -S sddm plasma
+   pacman -S sddm plasma  --noconfirm
     systemctl enable sddm
     if [ $? -eq 0 ]; then
         echo "kde 安装完成"
@@ -169,7 +169,7 @@ if [[ $REPLY =~ ^[1]$ ]]; then
 
     read -n1 -p "would you want to install kde-applications?[y/n]" REPLY2
     if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-        echo -e "\n" | pacman -S kde-applications
+        pacman -S kde-applications  --noconfirm
         if [ $? -eq 0 ]; then
             echo "kde-applications安装完成"
         else
@@ -181,7 +181,7 @@ if [[ $REPLY =~ ^[1]$ ]]; then
 
     read -n1 -p "would you want to install kcm-fcitx?[y/n]" REPLY2
     if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-        echo -e "\n" | pacman -S kcm-fcitx
+         pacman -S kcm-fcitx  --noconfirm
         if [ $? -eq 0 ]; then
             echo "kcm-fcitx安装完成"
         else
@@ -192,7 +192,7 @@ if [[ $REPLY =~ ^[1]$ ]]; then
     fi
 
 elif [[ $REPLY =~ ^[2]$ ]]; then
-    echo -e "\n" | pacman -S gnome
+     pacman -S gnome --noconfirm
     systemctl enable gdm
     if [ $? -eq 0 ]; then
         echo "gnome 安装完成"
@@ -202,7 +202,7 @@ elif [[ $REPLY =~ ^[2]$ ]]; then
     fi
 
 elif [[ $REPLY =~ ^[3]$ ]]; then
-    echo -e "\n" | pacman -S deepin lightdm
+ pacman -S deepin lightdm --noconfirm
     systemctl enable lightdm
     if [ $? -eq 0 ]; then
         echo "lightdm 安装完成"
