@@ -1,25 +1,25 @@
 #!/bin/bash
 sed -i "1 i  Server = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch\nServer = http://mirrors.163.com/archlinux/\$repo/os/\$arch \nServer = http://mirrors.bfsu.edu.cn/archlinux/\$repo/os/\$arch\n" /etc/pacman.d/mirrorlist
 if [ $? -eq 0 ]; then
-  echo " 换源完成"
+  echo " change mirror success"
 else
-  echo " 换源失败"
+  echo " change mirrorfailed"
   exit -1
 fi
 
 timedatectl set-ntp true
 if [ $? -eq 0 ]; then
-  echo " 时间校准完成"
+  echo " time verification  success"
 else
-  echo " 时间校准失败"
+  echo " time verification failed"
   exit -1
 fi
 
  pacman -Syy --noconfirm
 if [ $? -eq 0 ]; then
-  echo " pacman更新完成"
+  echo " pacman update  success"
 else
-  echo " pacman更新失败"
+  echo " pacman update failed"
   exit -1
 fi
 
@@ -28,9 +28,9 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   echo -e "\n" | pacstrap /mnt base base-devel linux-firmware
   if [ $? -eq 0 ]; then
-    echo "安装基础组件完成"
+    echo "install base success"
   else
-    echo "安装基础组件失败"
+    echo "install base failed"
     exit -1
   fi
 
@@ -46,27 +46,27 @@ read -n1 -p "which would you want to install ?[1/2/3]" REPLY
 if [[ $REPLY =~ ^[1]$ ]]; then
   echo -e "\n" | pacstrap /mnt linux linux-headers
   if [ $? -eq 0 ]; then
-    echo "linux linux-headers 安装完成"
+    echo "linux linux-headers  install  success"
   else
-    echo "linux linux-headers 安装失败"
+    echo "linux linux-headers  install failed"
     exit -1
   fi
 
 elif [[ $REPLY =~ ^[2]$ ]]; then
   echo -e "\n" | pacstrap /mnt linux-zen linux-zen-headers
   if [ $? -eq 0 ]; then
-    echo "linux-zen linux-zen-headers 安装完成"
+    echo "linux-zen linux-zen-headers  install  success"
   else
-    echo "linux-zen linux-zen-headers 安装失败"
+    echo "linux-zen linux-zen-headers  install failed"
     exit -1
   fi
 
 elif [[ $REPLY =~ ^[3]$ ]]; then
   echo -e "\n" | pacstrap /mnt linux-lts linux-lts-headers
   if [ $? -eq 0 ]; then
-    echo "linux-lts linux-lts-headers 安装完成"
+    echo "linux-lts linux-lts-headers  install  success"
   else
-    echo "linux-lts linux-lts-headers 安装失败"
+    echo "linux-lts linux-lts-headers  install failed"
     exit -1
   fi
 
@@ -75,14 +75,14 @@ fi
 mv /mnt/etc/fstab /mnt/etc/fstab.bak
 genfstab -U /mnt >/mnt/etc/fstab
 if [ $? -eq 0 ]; then
-  echo "生成fstab完成"
+  echo "build fstab success"
 else
-  echo "生成fstab失败"
+  echo "build fstabfailed"
   exit -1
 fi
 
 cp ./install2.sh /mnt
-echo "脚本1结束,请执行脚本2"
+echo "sh1 over , run sh2 "
 
 arch-chroot /mnt
 exit 0
