@@ -20,6 +20,9 @@ fi
 
 echo -e " [archlinuxcn] \n Include = /etc/pacman.d/archlinuxcn-mirrorlist " >>/etc/pacman.conf
 echo -e "Server = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch \nServer = https://mirrors.hit.edu.cn/archlinuxcn/\$arch" >/etc/pacman.d/archlinuxcn-mirrorlist
+rm /etc/pacman.d/gnupg -rf
+pacman-key --init
+pacman-key --populate
 echo -e "\n" | pacman -Syy archlinuxcn-keyring
 echo -e "\n" | pacman -S archlinuxcn-mirrorlist-git
 if [ $? -eq 0 ]; then
