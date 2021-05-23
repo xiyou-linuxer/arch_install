@@ -28,7 +28,7 @@ pacman -S archlinuxcn-mirrorlist-git --noconfirm
 if [ $? -eq 0 ]; then
     echo "change mirror success"
 else
-    echo "change mirror error"
+    echo "change mirror failed"
     exit -1
 fi
 
@@ -100,9 +100,9 @@ pacman -S bluez bluez-utils pulseaudio-bluetooth --noconfirm
 modprobe btusb
 systemctl enable bluetooth.service
 if [ $? -eq 0 ]; then
-    echo "blue toothsuccess"
+    echo "bluetooth success"
 else
-    echo "blue toothfailed"
+    echo "bluetooth failed"
     exit -1
 fi
 
@@ -217,9 +217,9 @@ pacman -S fcitx fcitx-im fcitx-libpinyin --noconfirm
 echo -e "GTK_IM_MODULE DEFAULT=fcitx\nQT_IM_MODULE  DEFAULT=fcitx\nXMODIFIERS    DEFAULT=@im=fcitx " >/home/$username/.pam_environment
 chown $username:$username /home/$username/.pam_environment
 if [ $? -eq 0 ]; then
-    echo "pinyinsuccess"
+    echo "pinyin success"
 else
-    echo "pinyinfailed"
+    echo "pinyin failed"
     exit -1
 fi
 
