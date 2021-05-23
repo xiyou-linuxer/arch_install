@@ -175,7 +175,7 @@ elif [[ $REPLY =~ ^[4]$ ]]; then
         exit -1
     fi
 
-    read -n1 -p "would you want to install ?[y/n]" REPLY2
+    read -n1 -p "would you want to install xfce4-goodies?[y/n]" REPLY2
     if [[ $REPLY2 =~ ^[Yy]$ ]]; then
         pacman -S xfce4-goodies --noconfirm
         if [ $? -eq 0 ]; then
