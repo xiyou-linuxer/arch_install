@@ -23,16 +23,16 @@ echo -e "Server = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch \nServer = http
 rm /etc/pacman.d/gnupg -rf
 pacman-key --init
 pacman-key --populate
- pacman -Syy archlinuxcn-keyring  --noconfirm
- pacman -S archlinuxcn-mirrorlist-git  --noconfirm 
+pacman -Syy archlinuxcn-keyring --noconfirm
+pacman -S archlinuxcn-mirrorlist-git --noconfirm
 if [ $? -eq 0 ]; then
-    echo "change mirrors uccess"
-else 
+    echo "change mirror success"
+else
     echo "change mirror error"
     exit -1
 fi
 
- pacman -S grub efibootmgr dosfstools  --noconfirm
+pacman -S grub efibootmgr dosfstools --noconfirm
 if [ $? -eq 0 ]; then
     echo "grub success"
 else
@@ -42,7 +42,7 @@ fi
 
 read -n1 -p "ntfs-3g install?[y/n]" REPLY
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  pacman -S os-prober ntfs-3g  --noconfirm
+    pacman -S os-prober ntfs-3g --noconfirmz
     if [ $? -eq 0 ]; then
         echo "os-prober success"
     else
@@ -63,7 +63,7 @@ else
 fi
 
 echo "fonts installing  (Google Noto Fonts 字体,思源黑体, 思源宋体,更纱黑体)"
- pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-sarasa-gothic adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts  --noconfirm
+pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-sarasa-gothic adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts --noconfirm
 if [ $? -eq 0 ]; then
     echo "install fonts success"
 else
@@ -72,7 +72,7 @@ else
 fi
 
 echo "network manager installing"
- pacman -S networkmanager  --noconfirm
+pacman -S networkmanager --noconfirm
 systemctl enable NetworkManager
 if [ $? -eq 0 ]; then
     echo "network managersuccess"
@@ -96,7 +96,7 @@ passwd
 echo "%wheel ALL=(ALL) ALL " >>/etc/sudoers
 
 echo "blue tooth installing"
-pacman -S bluez bluez-utils pulseaudio-bluetooth  --noconfirm
+pacman -S bluez bluez-utils pulseaudio-bluetooth --noconfirm
 modprobe btusb
 systemctl enable bluetooth.service
 if [ $? -eq 0 ]; then
@@ -106,13 +106,13 @@ else
     exit -1
 fi
 
-
-echo "[1]if install kde  ?-------[default]"
-echo "[2]if install gnome ? "
-echo "[3]if install deepin lightdm?"
-read -n1 -p "which would you want to install ?[1/2/3]" REPLY
+echo "[1]if install kde with sddm ?-------[default]"
+echo "[2]if install gnome with gdm? "
+echo "[3]if install deepin with lightdm?"
+echo "[4]if install xfce4 with sddm?"
+read -n1 -p "which would you want to install ?[1/2/3/4]" REPLY
 if [[ $REPLY =~ ^[1]$ ]]; then
-   pacman -S sddm plasma  --noconfirm
+    pacman -S sddm plasma --noconfirm
     systemctl enable sddm
     if [ $? -eq 0 ]; then
         echo "kde success"
@@ -123,11 +123,11 @@ if [[ $REPLY =~ ^[1]$ ]]; then
 
     read -n1 -p "would you want to install kde-applications?[y/n]" REPLY2
     if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-        pacman -S kde-applications  --noconfirm
+        pacman -S kde-applications --noconfirm
         if [ $? -eq 0 ]; then
-            echo "kde-applicationssuccess"
+            echo "kde-applications success"
         else
-            echo "kde-applicationsfailed"
+            echo "kde-applications failed"
             exit -1
         fi
 
@@ -135,18 +135,18 @@ if [[ $REPLY =~ ^[1]$ ]]; then
 
     read -n1 -p "would you want to install kcm-fcitx?[y/n]" REPLY2
     if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-         pacman -S kcm-fcitx  --noconfirm
+        pacman -S kcm-fcitx --noconfirm
         if [ $? -eq 0 ]; then
-            echo "kcm-fcitxsuccess"
+            echo "kcm-fcitx success"
         else
-            echo "kcm-fcitxfailed"
+            echo "kcm-fcitx failed"
             exit -1
         fi
 
     fi
 
 elif [[ $REPLY =~ ^[2]$ ]]; then
-     pacman -S gnome --noconfirm
+    pacman -S gnome --noconfirm
     systemctl enable gdm
     if [ $? -eq 0 ]; then
         echo "gnome success"
@@ -156,7 +156,7 @@ elif [[ $REPLY =~ ^[2]$ ]]; then
     fi
 
 elif [[ $REPLY =~ ^[3]$ ]]; then
- pacman -S deepin lightdm --noconfirm
+    pacman -S deepin lightdm --noconfirm
     systemctl enable lightdm
     if [ $? -eq 0 ]; then
         echo "lightdm success"
@@ -165,8 +165,41 @@ elif [[ $REPLY =~ ^[3]$ ]]; then
         exit -1
     fi
 
-fi
+elif [[ $REPLY =~ ^[4]$ ]]; then
+    pacman -S sddm xfce4 --noconfirm
+    systemctl enable sddm
+    if [ $? -eq 0 ]; then
+        echo "xfce4 success"
+    else
+        echo "xfce4 failed"
+        exit -1
+    fi
 
+    read -n1 -p "would you want to install ?[y/n]" REPLY2
+    if [[ $REPLY2 =~ ^[Yy]$ ]]; then
+        pacman -S xfce4-goodies --noconfirm
+        if [ $? -eq 0 ]; then
+            echo "xfce4-goodies success"
+        else
+            echo "xfce4-goodies failed"
+            exit -1
+        fi
+
+    fi
+
+    read -n1 -p "would you want to install fcitx-configtool ?[y/n]" REPLY2
+    if [[ $REPLY2 =~ ^[Yy]$ ]]; then
+        pacman -S fcitx-configtool --noconfirm
+        if [ $? -eq 0 ]; then
+            echo "fcitx-configtool success"
+        else
+            echo "fcitx-configtool failed"
+            exit -1
+        fi
+
+    fi
+
+fi
 
 read -p "Normal user " username
 useradd -m -G wheel $username
@@ -179,13 +212,10 @@ else
     exit -1
 fi
 
-
-
-
 echo "pinyin installing"
 pacman -S fcitx fcitx-im fcitx-libpinyin --noconfirm
 echo -e "GTK_IM_MODULE DEFAULT=fcitx\nQT_IM_MODULE  DEFAULT=fcitx\nXMODIFIERS    DEFAULT=@im=fcitx " >/home/$username/.pam_environment
-chown  $username:$username /home/$username/.pam_environment
+chown $username:$username /home/$username/.pam_environment
 if [ $? -eq 0 ]; then
     echo "pinyinsuccess"
 else
@@ -193,16 +223,14 @@ else
     exit -1
 fi
 
-
-
 echo "$usernameuser language configing"
 mkdir /home/$username/.config
-chown  $username:$username /home/$username/.config
+chown $username:$username /home/$username/.config
 echo -e "LANG=zh_CN.UTF-8\nLC_CTYPE=\"zh_CN.UTF-8\"\nLC_NUMERIC=\"zh_CN.UTF-8\"\nLC_TIME=\"zh_CN.UTF-8\"\n
 LC_COLLATE=\"zh_CN.UTF-8\"\nLC_MONETARY=\"zh_CN.UTF-8\"\nLC_MESSAGES=\"zh_CN.UTF-8\"\nLC_PAPER=\"zh_CN.UTF-8\"\n
 LC_NAME=\"zh_CN.UTF-8\"\nLC_ADDRESS=\"zh_CN.UTF-8\"\nLC_TELEPHONE=\"zh_CN.UTF-8\"\nLC_MEASUREMENT=\"zh_CN.UTF-8\"\n
 LC_IDENTIFICATION=\"zh_CN.UTF-8\"\nLC_ALL= " >/home/$username/.config/locale.conf
-chown  $username:$username /home/$username/.config/locale.conf
+chown $username:$username /home/$username/.config/locale.conf
 if [ $? -eq 0 ]; then
     echo "$username user languageconfig success"
 else
@@ -211,20 +239,19 @@ else
 fi
 
 echo "zsh configing"
-pacman -S zsh oh-my-zsh-git zsh-syntax-highlighting zsh-autosuggestions autojump  --noconfirm
+pacman -S zsh oh-my-zsh-git zsh-syntax-highlighting zsh-autosuggestions autojump --noconfirm
 chsh -s /bin/zsh $username
 ln -s /usr/share/zsh/plugins/zsh-syntax-highlighting /usr/share/oh-my-zsh/custom/plugins/
 ln -s /usr/share/zsh/plugins/zsh-autosuggestions /usr/share/oh-my-zsh/custom/plugins/
 cp /usr/share/oh-my-zsh/zshrc /home/$username/.zshrc
 sed 's/plugins=(git)/plugins=(autojump git zsh-syntax-highlighting zsh-autosuggestions)/g' /home/$username/.zshrc
-chown  $username:$username /home/$username/.zshrc
+chown $username:$username /home/$username/.zshrc
 if [ $? -eq 0 ]; then
     echo "zshconfig success"
 else
     echo "zshconfig failed"
     exit -1
 fi
-
 
 echo "reboot enter arch quickly"
 exit 0
