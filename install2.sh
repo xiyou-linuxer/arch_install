@@ -42,7 +42,7 @@ fi
 
 read -n1 -p "ntfs-3g install?[y/n]" REPLY
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    pacman -S os-prober ntfs-3g --noconfirmz
+    pacman -S os-prober ntfs-3g --noconfirm
     if [ $? -eq 0 ]; then
         echo "os-prober success"
     else
