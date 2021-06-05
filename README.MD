@@ -1,24 +1,23 @@
 # 说明
 
-本脚本包括 install1.sh 与 install2.sh (以下以脚本 1 与脚本 2 代替)
-其中脚本 1 适用于 arch 引导系统
-脚本 2 适用于安装的 arch 新系统
+本脚本包括 `install1.sh` 与 `install2.sh` (以下以脚本 1 与脚本 2 代替)
+其中脚本 1 适用于 ArchLinux 引导系统
+脚本 2 适用于安装的 ArchLinxu 新系统
 
 ## install1.sh 注意事项
 
 1. 提前分区
 
-```
-确保拥有`/mnt`目录作为新系统的`/`根目录
+本脚本假定用户使用 `GPT` 分区表，并以 `EFI` 启动 ArchLinux 安装介质。
+本脚本假定用户使用 `zh-CN ` 并且使用 `UTC+8` 作为系统的视区。
 
-`/mnt/boot`目录作为新系统的'/boot'分区
 
-将准备作为`/`的分区挂载到 `/mnt`
+- 确保拥有 `/mnt` 目录作为新系统的 `/` 根目录
 
-将准备作为`/boot`的分区挂载到 `/mnt/boot`
+- 确保拥有 `/mnt/boot` 目录作为新系统的 `/boot` 目录
 
-其余目录`(比如/home与/swap)`可选挂载
-```
+其余目录（如 `/home` 与 `/swap`）可选挂载
+
 
 2. 将脚本 1 与脚本 2 放置于同一目录下
 
@@ -34,4 +33,4 @@
 
 4. 能主动尝试解决一般报错
 
-5. 阅读[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)后向本项目提交issues
+5. 阅读 [提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md) 后向本项目提交 issues

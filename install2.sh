@@ -62,7 +62,7 @@ else
     exit -1
 fi
 
-echo "fonts installing  (Google Noto Fonts 字体,思源黑体, 思源宋体,更纱黑体)"
+echo "fonts installing ( Google Noto Fonts , Source Han Sans CN, Source Han Serif CN, Sarasa Gothic )"
 pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-sarasa-gothic adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts --noconfirm
 if [ $? -eq 0 ]; then
     echo "install fonts success"
