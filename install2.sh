@@ -112,7 +112,7 @@ echo "[3]if install deepin with lightdm?"
 echo "[4]if install xfce4 with sddm?"
 read -n1 -p "which would you want to install ?[1/2/3/4]" REPLY
 if [[ $REPLY =~ ^[1]$ ]]; then
-    pacman -S sddm plasma --noconfirm
+    pacman -S sddm plasma 
     systemctl enable sddm
     if [ $? -eq 0 ]; then
         echo "kde success"
@@ -123,7 +123,7 @@ if [[ $REPLY =~ ^[1]$ ]]; then
 
     read -n1 -p "would you want to install kde-applications?[y/n]" REPLY2
     if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-        pacman -S kde-applications --noconfirm
+        pacman -S kde-applications 
         if [ $? -eq 0 ]; then
             echo "kde-applications success"
         else
@@ -146,7 +146,7 @@ if [[ $REPLY =~ ^[1]$ ]]; then
     fi
 
 elif [[ $REPLY =~ ^[2]$ ]]; then
-    pacman -S gnome --noconfirm
+    pacman -S gnome 
     systemctl enable gdm
     if [ $? -eq 0 ]; then
         echo "gnome success"
@@ -166,7 +166,7 @@ elif [[ $REPLY =~ ^[3]$ ]]; then
     fi
 
 elif [[ $REPLY =~ ^[4]$ ]]; then
-    pacman -S sddm xfce4 --noconfirm
+    pacman -S sddm xfce4 
     systemctl enable sddm
     if [ $? -eq 0 ]; then
         echo "xfce4 success"
@@ -177,7 +177,7 @@ elif [[ $REPLY =~ ^[4]$ ]]; then
 
     read -n1 -p "would you want to install xfce4-goodies?[y/n]" REPLY2
     if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-        pacman -S xfce4-goodies --noconfirm
+        pacman -S xfce4-goodies 
         if [ $? -eq 0 ]; then
             echo "xfce4-goodies success"
         else
@@ -213,7 +213,7 @@ else
 fi
 
 echo "pinyin installing"
-pacman -S fcitx fcitx-im fcitx-libpinyin --noconfirm
+pacman -S fcitx fcitx-im fcitx-libpinyin 
 echo -e "GTK_IM_MODULE DEFAULT=fcitx\nQT_IM_MODULE  DEFAULT=fcitx\nXMODIFIERS    DEFAULT=@im=fcitx " >/home/$username/.pam_environment
 chown $username:$username /home/$username/.pam_environment
 if [ $? -eq 0 ]; then
