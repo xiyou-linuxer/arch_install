@@ -192,7 +192,7 @@ else
 fi
 
 echo "pinyin installing"
-pacman -S fcitx fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki
+pacman -S fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki
 echo -e "GTK_IM_MODULE DEFAULT=fcitx\nQT_IM_MODULE  DEFAULT=fcitx\nXMODIFIERS    DEFAULT=\\\\@im=fcitx\nSDL_IM_MODULE DEFAULT=fcitx" >/home/$username/.pam_environment
 chown $username:$username /home/$username/.pam_environment
 if [ $? -eq 0 ]; then
