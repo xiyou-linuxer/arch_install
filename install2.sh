@@ -112,7 +112,7 @@ echo "[3]if install deepin with lightdm?"
 echo "[4]if install xfce4 with sddm?"
 read -n1 -p "which would you want to install ?[1/2/3/4]" REPLY
 if [[ $REPLY =~ ^[1]$ ]]; then
-    pacman -S sddm plasma 
+    pacman -S sddm plasma
     systemctl enable sddm
     if [ $? -eq 0 ]; then
         echo "kde success"
@@ -123,7 +123,7 @@ if [[ $REPLY =~ ^[1]$ ]]; then
 
     read -n1 -p "would you want to install kde-applications?[y/n]" REPLY2
     if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-        pacman -S kde-applications 
+        pacman -S kde-applications
         if [ $? -eq 0 ]; then
             echo "kde-applications success"
         else
@@ -133,20 +133,9 @@ if [[ $REPLY =~ ^[1]$ ]]; then
 
     fi
 
-    read -n1 -p "would you want to install kcm-fcitx?[y/n]" REPLY2
-    if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-        pacman -S kcm-fcitx --noconfirm
-        if [ $? -eq 0 ]; then
-            echo "kcm-fcitx success"
-        else
-            echo "kcm-fcitx failed"
-            exit -1
-        fi
-
-    fi
 
 elif [[ $REPLY =~ ^[2]$ ]]; then
-    pacman -S gnome 
+    pacman -S gnome
     systemctl enable gdm
     if [ $? -eq 0 ]; then
         echo "gnome success"
@@ -166,7 +155,7 @@ elif [[ $REPLY =~ ^[3]$ ]]; then
     fi
 
 elif [[ $REPLY =~ ^[4]$ ]]; then
-    pacman -S sddm xfce4 
+    pacman -S sddm xfce4
     systemctl enable sddm
     if [ $? -eq 0 ]; then
         echo "xfce4 success"
@@ -177,7 +166,7 @@ elif [[ $REPLY =~ ^[4]$ ]]; then
 
     read -n1 -p "would you want to install xfce4-goodies?[y/n]" REPLY2
     if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-        pacman -S xfce4-goodies 
+        pacman -S xfce4-goodies
         if [ $? -eq 0 ]; then
             echo "xfce4-goodies success"
         else
@@ -187,17 +176,7 @@ elif [[ $REPLY =~ ^[4]$ ]]; then
 
     fi
 
-    read -n1 -p "would you want to install fcitx-configtool ?[y/n]" REPLY2
-    if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-        pacman -S fcitx-configtool --noconfirm
-        if [ $? -eq 0 ]; then
-            echo "fcitx-configtool success"
-        else
-            echo "fcitx-configtool failed"
-            exit -1
-        fi
 
-    fi
 
 fi
 
@@ -213,8 +192,8 @@ else
 fi
 
 echo "pinyin installing"
-pacman -S fcitx fcitx-im fcitx-libpinyin 
-echo -e "GTK_IM_MODULE DEFAULT=fcitx\nQT_IM_MODULE  DEFAULT=fcitx\nXMODIFIERS    DEFAULT=@im=fcitx " >/home/$username/.pam_environment
+pacman -S fcitx fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki
+echo -e "GTK_IM_MODULE DEFAULT=fcitx\nQT_IM_MODULE  DEFAULT=fcitx\nXMODIFIERS    DEFAULT=\\\\@im=fcitx\nSDL_IM_MODULE DEFAULT=fcitx" >/home/$username/.pam_environment
 chown $username:$username /home/$username/.pam_environment
 if [ $? -eq 0 ]; then
     echo "pinyin success"
