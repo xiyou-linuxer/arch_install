@@ -180,7 +180,7 @@ elif [[ $REPLY =~ ^[4]$ ]]; then
 
 fi
 
-read -p "Normal user " username
+read -p "\nNormal user " username
 useradd -m -G wheel $username
 echo "$username passwd"
 passwd $username
