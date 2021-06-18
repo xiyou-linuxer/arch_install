@@ -40,21 +40,30 @@ else
     exit -1
 fi
 
-read -n1 -p "ntfs-3g install?[y/n]" REPLY
+read -n1 -p "enable multiple systems support?[y/n]" REPLY
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    pacman -S os-prober ntfs-3g --noconfirm
+    echo "GRUB_DISABLE_OS_PROBER=false" >>/etc/default/grub
+    pacman -S os-prober --noconfirm
     if [ $? -eq 0 ]; then
         echo "os-prober success"
     else
         echo "os-prober failed"
         exit -1
     fi
-
+    read -n1 -p "enable ntfs filesystem support?[y/n]" REPLY
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        pacman -S ntfs-3g --noconfirm
+        if [ $? -eq 0 ]; then
+            echo "ntfs-3g install success"
+        else
+            echo "ntfs-3g install failed"
+            exit -1
+        fi
+    fi
 fi
 
 echo "build grub "
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --recheck
-echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 if [ $? -eq 0 ]; then
     echo "grub success"
@@ -134,8 +143,9 @@ if [[ $REPLY =~ ^[1]$ ]]; then
 
     fi
 
-
-elif [[ $REPLY =~ ^[2]$ ]]; then
+elif
+    [[ $REPLY =~ ^[2]$ ]]
+then
     pacman -S gnome
     systemctl enable gdm
     if [ $? -eq 0 ]; then
@@ -176,8 +186,6 @@ elif [[ $REPLY =~ ^[4]$ ]]; then
         fi
 
     fi
-
-
 
 fi
 
