@@ -54,6 +54,7 @@ fi
 
 echo "build grub "
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --recheck
+echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 if [ $? -eq 0 ]; then
     echo "grub success"
