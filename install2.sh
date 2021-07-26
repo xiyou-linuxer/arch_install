@@ -156,7 +156,7 @@ then
     fi
 
 elif [[ $REPLY =~ ^[3]$ ]]; then
-    pacman -S deepin lightdm --noconfirm
+    pacman -S deepin lightdm xorg-server --noconfirm
     systemctl enable lightdm
     if [ $? -eq 0 ]; then
         echo "lightdm success"
