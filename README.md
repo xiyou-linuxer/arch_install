@@ -2,7 +2,7 @@
 
 本脚本包括 `install1.sh` 与 `install2.sh` (以下以脚本 1 与脚本 2 代替)
 其中脚本 1 适用于 ArchLinux 引导系统
-脚本 2 适用于安装的 ArchLinxu 新系统
+脚本 2 适用于安装的 ArchLinux 新系统
 
 ## install1.sh 注意事项
 
