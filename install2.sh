@@ -23,7 +23,7 @@ passwd
 
 read -p "\nNormal user " username
 useradd -m -G wheel $username
-echo "$username passwd"
+echo "\n$username passwd"
 passwd $username
 if [ $? -eq 0 ]; then
     echo "user $username add success "
@@ -32,14 +32,14 @@ else
     exit -1
 fi
 
-read -n1 -p "install nvidia? [y/n]" nvidia
+read -n1 -p "\ninstall nvidia? [y/n]" nvidia
 
-read -n1 -p "enable multiple systems support?[y/n]" multiplesupport
+read -n1 -p "\nenable multiple systems support?[y/n]" multiplesupport
 if [[ $multiplesupport =~ ^[Yy]$ ]]; then
-    read -n1 -p "enable ntfs filesystem support?[y/n]" ntfs3gsupport
+    read -n1 -p "\nenable ntfs filesystem support?[y/n]" ntfs3gsupport
 fi
 
-read -p "hostname:" userhostname
+read -p "\nhostname:" userhostname
 echo $userhostname >>/etc/hostname
 if [ $? -eq 0 ]; then
     echo "change hostname success "
