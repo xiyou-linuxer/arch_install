@@ -32,6 +32,8 @@ else
     exit -1
 fi
 
+read -n1 -p "install nvidia? [y/n]" nvidia
+
 read -n1 -p "enable multiple systems support?[y/n]" multiplesupport
 if [[ $multiplesupport =~ ^[Yy]$ ]]; then
     read -n1 -p "enable ntfs filesystem support?[y/n]" ntfs3gsupport
@@ -77,6 +79,17 @@ if [ $? -eq 0 ]; then
 else
     echo "grub failed"
     exit -1
+fi
+
+if [[ $nvidia =~ ^[Yy]$ ]]; then
+    echo "install nvidia ing"
+    pacman -S nvidia --noconfirm
+    if [ $? -eq 0 ]; then
+        echo "os-prober success"
+    else
+        echo "os-prober failed"
+        exit -1
+    fi
 fi
 
 if [[ $multiplesupport =~ ^[Yy]$ ]]; then
