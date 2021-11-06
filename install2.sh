@@ -18,6 +18,45 @@ else
     exit -1
 fi
 
+echo "root passed:"
+passwd
+
+read -p "\nNormal user " username
+useradd -m -G wheel $username
+echo "$username passwd"
+passwd $username
+if [ $? -eq 0 ]; then
+    echo "user $username add success "
+else
+    echo "user $username add failed "
+    exit -1
+fi
+
+read -n1 -p "enable multiple systems support?[y/n]" multiplesupport
+if [[ $multiplesupport =~ ^[Yy]$ ]]; then
+    read -n1 -p "enable ntfs filesystem support?[y/n]" ntfs3gsupport
+fi
+
+read -p "hostname:" userhostname
+echo $userhostname >>/etc/hostname
+if [ $? -eq 0 ]; then
+    echo "change hostname success "
+else
+    echo "change hostname failed "
+    exit -1
+fi
+
+echo "[1]if install kde with sddm ?-------[default]"
+echo "[2]if install gnome with gdm? "
+echo "[3]if install deepin with lightdm?"
+echo "[4]if install xfce4 with sddm?"
+read -n1 -p "which would you want to install ?[1/2/3/4]" desktop
+if [[ $desktop =~ ^[1]$ ]]; then
+    read -n1 -p "would you want to install kde-applications?[y/n]" kdeapplications
+elif [[ $desktop =~ ^[4]$ ]]; then
+    read -n1 -p "would you want to install ?[y/n]" xfce4-goodies
+fi
+
 echo -e " [archlinuxcn] \n Include = /etc/pacman.d/archlinuxcn-mirrorlist " >>/etc/pacman.conf
 echo -e "Server = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch \nServer = https://mirrors.hit.edu.cn/archlinuxcn/\$arch" >/etc/pacman.d/archlinuxcn-mirrorlist
 rm /etc/pacman.d/gnupg -rf
@@ -40,8 +79,7 @@ else
     exit -1
 fi
 
-read -n1 -p "enable multiple systems support?[y/n]" REPLY
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+if [[ $multiplesupport =~ ^[Yy]$ ]]; then
     echo "GRUB_DISABLE_OS_PROBER=false" >>/etc/default/grub
     pacman -S os-prober --noconfirm
     if [ $? -eq 0 ]; then
@@ -50,8 +88,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo "os-prober failed"
         exit -1
     fi
-    read -n1 -p "enable ntfs filesystem support?[y/n]" REPLY
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if [[ $ntfs3gsupport =~ ^[Yy]$ ]]; then
         pacman -S ntfs-3g --noconfirm
         if [ $? -eq 0 ]; then
             echo "ntfs-3g install success"
@@ -91,18 +128,6 @@ else
     exit -1
 fi
 
-read -p "hostname:" userhostname
-echo $userhostname >>/etc/hostname
-if [ $? -eq 0 ]; then
-    echo "change hostname success "
-else
-    echo "change hostname failed "
-    exit -1
-fi
-
-echo "root passed:"
-passwd
-
 echo "%wheel ALL=(ALL) ALL " >>/etc/sudoers
 
 echo "blue tooth installing"
@@ -116,13 +141,8 @@ else
     exit -1
 fi
 
-echo "[1]if install kde with sddm ?-------[default]"
-echo "[2]if install gnome with gdm? "
-echo "[3]if install deepin with lightdm?"
-echo "[4]if install xfce4 with sddm?"
-read -n1 -p "which would you want to install ?[1/2/3/4]" REPLY
-if [[ $REPLY =~ ^[1]$ ]]; then
-    pacman -S sddm plasma
+if [[ $desktop =~ ^[1]$ ]]; then
+    pacman -S sddm plasma --noconfirm
     systemctl enable sddm
     if [ $? -eq 0 ]; then
         echo "kde success"
@@ -130,10 +150,8 @@ if [[ $REPLY =~ ^[1]$ ]]; then
         echo "kde failed"
         exit -1
     fi
-
-    read -n1 -p "would you want to install kde-applications?[y/n]" REPLY2
-    if [[ $REPLY2 =~ ^[Yy]$ ]]; then
-        pacman -S kde-applications
+    if [[ $kdeapplications =~ ^[Yy]$ ]]; then
+        pacman -S kde-applications --noconfirm
         if [ $? -eq 0 ]; then
             echo "kde-applications success"
         else
@@ -143,10 +161,8 @@ if [[ $REPLY =~ ^[1]$ ]]; then
 
     fi
 
-elif
-    [[ $REPLY =~ ^[2]$ ]]
-then
-    pacman -S gnome
+elif [[ $desktop =~ ^[2]$ ]]; then
+    pacman -S gnome --noconfirm
     systemctl enable gdm
     if [ $? -eq 0 ]; then
         echo "gnome success"
@@ -155,7 +171,7 @@ then
         exit -1
     fi
 
-elif [[ $REPLY =~ ^[3]$ ]]; then
+elif [[ $desktop =~ ^[3]$ ]]; then
     pacman -S deepin lightdm xorg-server --noconfirm
     systemctl enable lightdm
     if [ $? -eq 0 ]; then
@@ -165,8 +181,8 @@ elif [[ $REPLY =~ ^[3]$ ]]; then
         exit -1
     fi
 
-elif [[ $REPLY =~ ^[4]$ ]]; then
-    pacman -S sddm xfce4
+elif [[ $desktop =~ ^[4]$ ]]; then
+    pacman -S sddm xfce4 --noconfirm
     systemctl enable sddm
     if [ $? -eq 0 ]; then
         echo "xfce4 success"
@@ -175,8 +191,7 @@ elif [[ $REPLY =~ ^[4]$ ]]; then
         exit -1
     fi
 
-    read -n1 -p "would you want to install xfce4-goodies?[y/n]" REPLY2
-    if [[ $REPLY2 =~ ^[Yy]$ ]]; then
+    if [[ $xfce4-goodies =~ ^[Yy]$ ]]; then
         pacman -S xfce4-goodies
         if [ $? -eq 0 ]; then
             echo "xfce4-goodies success"
@@ -189,19 +204,8 @@ elif [[ $REPLY =~ ^[4]$ ]]; then
 
 fi
 
-read -p "\nNormal user " username
-useradd -m -G wheel $username
-echo "$username passwd"
-passwd $username
-if [ $? -eq 0 ]; then
-    echo "user $username add success "
-else
-    echo "user $username add failed "
-    exit -1
-fi
-
 echo "pinyin installing"
-pacman -S fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki
+pacman -S fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki --noconfirm
 echo -e "GTK_IM_MODULE DEFAULT=fcitx\nQT_IM_MODULE  DEFAULT=fcitx\nXMODIFIERS    DEFAULT=\\\\@im=fcitx\nINPUT_METHOD  DEFAULT=fcitx\nSDL_IM_MODULE DEFAULT=fcitx" >/home/$username/.pam_environment
 chown $username:$username /home/$username/.pam_environment
 if [ $? -eq 0 ]; then
@@ -228,19 +232,18 @@ fi
 
 echo "zsh configing"
 pacman -S zsh oh-my-zsh-git zsh-syntax-highlighting zsh-autosuggestions --noconfirm
+yay -S autojump --noconfirm
 chsh -s /bin/zsh $username
 ln -s /usr/share/zsh/plugins/zsh-syntax-highlighting /usr/share/oh-my-zsh/custom/plugins/
 ln -s /usr/share/zsh/plugins/zsh-autosuggestions /usr/share/oh-my-zsh/custom/plugins/
 cp /usr/share/oh-my-zsh/zshrc /home/$username/.zshrc
 sed -i 's/plugins=(git)/plugins=(autojump sudo git colored-man-pages zsh-syntax-highlighting zsh-autosuggestions)/g' /home/$username/.zshrc
 if [ $? -eq 0 ]; then
-	    echo "zshconfig success"
-	else
-		    echo "zshconfig failed"
-			    exit -1
+    echo "zshconfig success"
+else
+    echo "zshconfig failed"
+    exit -1
 fi
-
-
 
 echo "reboot enter arch quickly"
 exit 0
