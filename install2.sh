@@ -244,7 +244,7 @@ else
 fi
 
 echo "zsh configing"
-pacman -S zsh oh-my-zsh-git zsh-syntax-highlighting zsh-autosuggestions --noconfirm
+pacman -S zsh yay oh-my-zsh-git zsh-syntax-highlighting zsh-autosuggestions --noconfirm
 yay -S autojump --noconfirm
 chsh -s /bin/zsh $username
 ln -s /usr/share/zsh/plugins/zsh-syntax-highlighting /usr/share/oh-my-zsh/custom/plugins/
@@ -258,5 +258,5 @@ else
     exit -1
 fi
 
-echo "reboot enter arch quickly"
+echo "exit && reboot enter arch quickly"
 exit 0
