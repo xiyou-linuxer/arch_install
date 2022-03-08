@@ -141,7 +141,7 @@ else
     exit -1
 fi
 
-echo "%wheel ALL=(ALL) ALL " >>/etc/sudoers
+echo "%wheel ALL=(ALL:ALL) ALL" >>/etc/sudoers
 
 echo "blue tooth installing"
 pacman -S bluez bluez-utils pulseaudio-bluetooth --noconfirm
