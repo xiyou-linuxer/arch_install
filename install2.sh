@@ -52,6 +52,7 @@ echo "[1]if install kde with sddm ?-------[default]"
 echo "[2]if install gnome with gdm? "
 echo "[3]if install deepin with lightdm?"
 echo "[4]if install xfce4 with sddm?"
+echo "[5]skip"
 read -n1 -p "which would you want to install ?[1/2/3/4]" desktop
 if [[ $desktop =~ ^[1]$ ]]; then
     read -n1 -p "would you want to install kde-applications?[y/n]" kdeapplications
@@ -60,7 +61,7 @@ elif [[ $desktop =~ ^[4]$ ]]; then
 fi
 
 echo -e " [archlinuxcn] \n Include = /etc/pacman.d/archlinuxcn-mirrorlist " >>/etc/pacman.conf
-echo -e "Server = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch \nServer = https://mirrors.hit.edu.cn/archlinuxcn/\$arch" >/etc/pacman.d/archlinuxcn-mirrorlist
+echo -e "Server = https://mirrors.bfsu.edu.cn/archlinuxcn/\$arch \nServer = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch \nServer = https://mirrors.hit.edu.cn/archlinuxcn/\$arch" >/etc/pacman.d/archlinuxcn-mirrorlist
 rm /etc/pacman.d/gnupg -rf
 pacman-key --init
 pacman-key --populate
@@ -213,6 +214,15 @@ elif [[ $desktop =~ ^[4]$ ]]; then
             exit -1
         fi
 
+    fi
+elif [[ $desktop =~ ^[5]$ ]]; then
+    pacman -S sddm xfce4 --noconfirm
+    systemctl enable sddm
+    if [ $? -eq 0 ]; then
+        echo "xfce4 success"
+    else
+        echo "xfce4 failed"
+        exit -1
     fi
 
 fi

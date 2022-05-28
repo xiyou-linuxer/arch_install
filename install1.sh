@@ -1,5 +1,5 @@
 #!/bin/bash
-sed -i "1 i  Server = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch\nServer = http://mirrors.163.com/archlinux/\$repo/os/\$arch \nServer = http://mirrors.bfsu.edu.cn/archlinux/\$repo/os/\$arch\n" /etc/pacman.d/mirrorlist
+sed -i "1 i  Server = http://mirrors.bfsu.edu.cn/archlinux/\$repo/os/\$arch\nServer = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch\nServer = http://mirrors.163.com/archlinux/\$repo/os/\$arch \n" /etc/pacman.d/mirrorlist
 if [ $? -eq 0 ]; then
   echo " change mirror success"
 else
@@ -42,6 +42,7 @@ fi
 echo "[1]install linux linux-headers    -------[default]"
 echo "[2]if install linux-zen linux-zen-headers? "
 echo "[3]if install linux-lts linux-lts-headers?"
+echo "[4]if install linux-hardened linux-hardened-headers?"
 read -n1 -p "which would you want to install ?[1/2/3]" REPLY
 if [[ $REPLY =~ ^[1]$ ]]; then
   echo -e "\n" | pacstrap /mnt linux linux-headers
@@ -63,6 +64,15 @@ elif [[ $REPLY =~ ^[2]$ ]]; then
 
 elif [[ $REPLY =~ ^[3]$ ]]; then
   echo -e "\n" | pacstrap /mnt linux-lts linux-lts-headers
+  if [ $? -eq 0 ]; then
+    echo "linux-lts linux-lts-headers  install  success"
+  else
+    echo "linux-lts linux-lts-headers  install failed"
+    exit -1
+  fi
+
+elif [[ $REPLY =~ ^[4]$ ]]; then
+  echo -e "\n" | pacstrap /mnt linux-hardened linux-hardened-headers
   if [ $? -eq 0 ]; then
     echo "linux-lts linux-lts-headers  install  success"
   else
