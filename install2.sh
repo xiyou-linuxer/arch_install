@@ -218,8 +218,7 @@ elif [[ $desktop =~ ^[4]$ ]]; then
 
     fi
 elif [[ $desktop =~ ^[5]$ ]]; then
-    pacman -S sway 
-    pacman -S waybar
+    pacman -S sway waybar --noconfirm
     if [ $? -eq 0 ]; then
         echo "sway success"
     else
