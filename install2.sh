@@ -226,7 +226,6 @@ elif [[ $desktop =~ ^[5]$ ]]; then
         exit -1
     fi
 
-fi
 elif [[ $desktop =~ ^[6]$ ]]; then 
 
 fi
