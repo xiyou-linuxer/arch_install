@@ -208,7 +208,7 @@ elif [[ $desktop =~ ^[4]$ ]]; then
     fi
 
     if [[ $xfce4-goodies =~ ^[Yy]$ ]]; then
-        pacman -S xfce4-goodies
+        pacman -S xfce4-goodies --noconfirm
         if [ $? -eq 0 ]; then
             echo "xfce4-goodies success"
         else
@@ -225,9 +225,8 @@ elif [[ $desktop =~ ^[5]$ ]]; then
         echo "sway failed"
         exit -1
     fi
-
 elif [[ $desktop =~ ^[6]$ ]]; then 
-
+    echo "skip success"
 fi
 
 echo "pinyin installing"
