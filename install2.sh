@@ -49,12 +49,12 @@ else
 fi
 
 echo "[1]if install kde with sddm ?-------[default]"
-echo "[2]if install gnome with gdm? "
+echo "[2]if install gnome with gdm?"
 echo "[3]if install deepin with lightdm?"
 echo "[4]if install xfce4 with sddm?"
-echo "[5]if install sway "
+echo "[5]if install sway?"
 echo "[6]skip this step"
-read -n1 -p "which would you want to install ?[1/2/3/4]" desktop
+read -n1 -p "which would you want to install ?[1/2/3/4/5/6]" desktop
 if [[ $desktop =~ ^[1]$ ]]; then
     read -n1 -p "would you want to install kde-applications?[y/n]" kdeapplications
 elif [[ $desktop =~ ^[4]$ ]]; then
@@ -262,6 +262,8 @@ chsh -s /bin/zsh $username
 ln -s /usr/share/zsh/plugins/zsh-syntax-highlighting /usr/share/oh-my-zsh/custom/plugins/
 ln -s /usr/share/zsh/plugins/zsh-autosuggestions /usr/share/oh-my-zsh/custom/plugins/
 cp /usr/share/oh-my-zsh/zshrc /home/$username/.zshrc
+chmod $username /home/$username/.zshrc  
+
 sed -i 's/plugins=(git)/plugins=(autojump sudo git colored-man-pages zsh-syntax-highlighting zsh-autosuggestions)/g' /home/$username/.zshrc
 if [ $? -eq 0 ]; then
     echo "zshconfig success"
