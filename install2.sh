@@ -262,7 +262,7 @@ chsh -s /bin/zsh $username
 ln -s /usr/share/zsh/plugins/zsh-syntax-highlighting /usr/share/oh-my-zsh/custom/plugins/
 ln -s /usr/share/zsh/plugins/zsh-autosuggestions /usr/share/oh-my-zsh/custom/plugins/
 cp /usr/share/oh-my-zsh/zshrc /home/$username/.zshrc
-chmod $username /home/$username/.zshrc  
+chown $username:$username /home/$username/.zshrc  
 
 sed -i 's/plugins=(git)/plugins=(autojump sudo git colored-man-pages zsh-syntax-highlighting zsh-autosuggestions)/g' /home/$username/.zshrc
 if [ $? -eq 0 ]; then
