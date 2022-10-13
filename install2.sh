@@ -218,7 +218,7 @@ elif [[ $desktop =~ ^[4]$ ]]; then
 
     fi
 elif [[ $desktop =~ ^[5]$ ]]; then
-    pacman -S sway waybar --noconfirm
+    pacman -S sway waybar xorg-xwayland --noconfirm
     if [ $? -eq 0 ]; then
         echo "sway success"
     else
