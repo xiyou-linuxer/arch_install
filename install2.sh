@@ -231,14 +231,11 @@ fi
 
 echo "pinyin installing"
 pacman -S fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki --noconfirm
-echo -e "GTK_IM_MODULE DEFAULT=fcitx\nQT_IM_MODULE  DEFAULT=fcitx\nXMODIFIERS    DEFAULT=\\\\@im=fcitx\nINPUT_METHOD  DEFAULT=fcitx\nSDL_IM_MODULE DEFAULT=fcitx" >/home/$username/.pam_environment
-chown $username:$username /home/$username/.pam_environment
-if [ $? -eq 0 ]; then
-    echo "pinyin success"
-else
-    echo "pinyin failed"
-    exit -1
-fi
+echo "GTK_IM_MODULE=fcitx" >>/etc/environment
+echo "QT_IM_MODULE=fcitx" >>/etc/environment
+echo "XMODIFIERS=@im=fcitx" >>/etc/environment
+echo "SDL_IM_MODULE=fcitx" >>/etc/environment
+echo "GLFW_IM_MODULE=ibus" >>/etc/environment
 
 echo "$usernameuser language configing"
 mkdir /home/$username/.config
