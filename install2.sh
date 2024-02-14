@@ -63,11 +63,11 @@ fi
 
 echo -e " [archlinuxcn] \n Include = /etc/pacman.d/archlinuxcn-mirrorlist " >>/etc/pacman.conf
 echo -e "Server = https://mirrors.bfsu.edu.cn/archlinuxcn/\$arch \nServer = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch \nServer = https://mirrors.hit.edu.cn/archlinuxcn/\$arch" >/etc/pacman.d/archlinuxcn-mirrorlist
-pacman-key --lsign farseerfc@archlinux.org
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 rm /etc/pacman.d/gnupg -rf
 pacman-key --init
 pacman-key --populate
+pacman-key --lsign farseerfc@archlinux.org
 pacman -Syy archlinuxcn-keyring --noconfirm
 pacman -S archlinuxcn-mirrorlist-git --noconfirm
 if [ $? -eq 0 ]; then
